@@ -1,10 +1,17 @@
 package com.oxistudios.charlie.ability_engine;
 
+import com.oxistudios.charlie.saving_engine.SavingController;
+
 /*
  * This class will control what abilities are made and send data to the controller
  */
 
 public class AbilityController {
+	
+	private String master_ability_locator = "hard coded location";
+	private String ability_one_location;
+	private String ability_two_location
+	private SavingController saving_controller;
 
 	int ability_one_CD = 0;
 	int ability_two_CD = 0;
@@ -15,8 +22,15 @@ public class AbilityController {
 	boolean selected_ability_one = false;
 	boolean selected_ability_two = false;
 
-	public AbilityController(int ability_one_id, int ability_two_id) {
-
+	public AbilityController(SavingController saving_controller, int ability_one_id, int ability_two_id) {
+		this.saving_controller = saving_controller;
+		
+		ability_one_location = getAbilityFileLocation(ability_one_id);
+		ability_two_location = getAbilityFileLocation(ability_two_id);
+	}
+	
+	public void loadAbilities() {
+		
 	}
 
 	public void render() {
@@ -106,6 +120,27 @@ public class AbilityController {
 		double time = 5;
 		// write some magic here
 		return time;
+	}
+	
+	/**
+	 * 
+	 * @param ability_id
+	 * @return the file for that ability, has all the information about the ability
+	 */
+	private String getAbilityFileLocation(int ability_id) {
+		int count = 0;
+		String ability_id_string = "" + ability_id;
+		String[] file_data = saving_controller.read(master_ability_locator);
+		for (String level_local : file_data) {
+			++count;
+			
+			if(ability_id_string == level_local) {
+				++count;
+				return file_data[count];
+			}
+		}
+		
+		return null;
 	}
 
 	// //////////////////////////////////////////////////////

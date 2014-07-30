@@ -29,7 +29,7 @@ public class PhysicsController {
 		accumulator += delta;
 		while(accumulator > BOX_STEP) {
 			world.step(BOX_STEP, BOX_VELOCITY_ITERATIONS, BOX_POSITION_ITERATIONS);
-			accumulator -= BOX_STEP;
+			accumulator -= BOX_STEP; 
 		}
 		
 		//safe to remove bodies here
