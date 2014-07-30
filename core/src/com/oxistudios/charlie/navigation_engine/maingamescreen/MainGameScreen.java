@@ -5,12 +5,15 @@ import com.oxistudios.charlie.MainGame;
 import com.oxistudios.charlie.ability_engine.AbilityController;
 import com.oxistudios.charlie.core_engine.Controller;
 import com.oxistudios.charlie.navigation_engine.MasterScreenClass;
+import com.oxistudios.charlie.saving_engine.SavingController;
 
 public class MainGameScreen extends MasterScreenClass{
 	
-	MainGame game;
-	Controller controller;
-	AbilityController ability_controller;
+	private MainGame game;
+	private Controller controller;
+	private AbilityController ability_controller;
+	private SavingController saving_controller;
+	private String level_selected;
 	public MainGameScreen(MainGame game) {
 		this.game = game;
 	}
@@ -33,8 +36,13 @@ public class MainGameScreen extends MasterScreenClass{
 		if(ability_controller == null) {
 			ability_controller = new AbilityController(0, 1);
 		}
+		
+		if(saving_controller == null) {
+			saving_controller = new SavingController();
+		}
+		
 		if(controller == null) {
-			controller = new Controller(game, this, ability_controller);
+			controller = new Controller(game, this, ability_controller, saving_controller, level_selected);
 		}
 	}
 
