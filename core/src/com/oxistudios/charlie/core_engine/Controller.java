@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.controls;
+package com.oxistudios.charlie.core_engine;
 
 import com.oxistudios.charlie.MainGame;
 import com.oxistudios.charlie.ablities.AbilityController;

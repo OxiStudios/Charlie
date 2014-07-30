@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.screens;
+package com.oxistudios.charlie.navigation_engine;
 
 import com.badlogic.gdx.Screen;
 

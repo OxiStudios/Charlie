@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.ablities;
+package com.oxistudios.charlie.ability_engine;
 
 /*
  * This class will control what abilities are made and send data to the controller

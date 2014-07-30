@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.levels;
+package com.oxistudios.charlie.level_engine;
 
 import com.oxistudios.charlie.levels.types.Puzzle;
 import com.oxistudios.charlie.levels.types.Runner;

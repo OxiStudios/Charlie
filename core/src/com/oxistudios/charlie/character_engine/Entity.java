@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.characters;
+package com.oxistudios.charlie.character_engine;
 
 public class Entity {
 	

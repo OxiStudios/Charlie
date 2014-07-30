@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.levels;
+package com.oxistudios.charlie.level_engine;
 
 
 public class MasterLevel {

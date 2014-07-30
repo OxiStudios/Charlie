@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.levels.types;
+package com.oxistudios.charlie.level_engine.types;
 
 import com.oxistudios.charlie.levels.MasterLevel;
 

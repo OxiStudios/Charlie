@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.screens.maingamescreen;
+package com.oxistudios.charlie.navigation_engine.maingamescreen;
 
 
 import com.oxistudios.charlie.MainGame;

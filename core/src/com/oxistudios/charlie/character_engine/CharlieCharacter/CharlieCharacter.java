@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.characters.CharlieCharacter;
+package com.oxistudios.charlie.character_engine.CharlieCharacter;
 
 import com.oxistudios.charlie.characters.Entity;
 

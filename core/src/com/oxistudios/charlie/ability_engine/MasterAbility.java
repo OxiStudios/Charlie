@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.ablities;
+package com.oxistudios.charlie.ability_engine;
 
 public class MasterAbility {
 	
