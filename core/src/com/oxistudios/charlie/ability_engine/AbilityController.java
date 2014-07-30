@@ -20,7 +20,7 @@ public class AbilityController {
 	}
 
 	public void render() {
-
+	
 	}
 
 	public void update() {
