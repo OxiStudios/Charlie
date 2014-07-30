@@ -41,7 +41,8 @@ public class MasterLevel {
 
 	public Array<String> getDataBlock() {
 		Array<String> data = new Array<String>();
-
+		
+		//can be optimized
 		for (String single_data : level_data) {
 
 			--place;
@@ -58,18 +59,19 @@ public class MasterLevel {
 	}
 	
 	public HashMap<String, Integer> getEnemyData(Array<String> data) {
-		boolean read = false;
 		HashMap<String, Integer> enemy_data = new HashMap<String, Integer>();
 		int i;
+		
 		for(i = 0; i < data.size; ++i) {
 			if(data.get(i) == "ENEMY_DATA"){
-				read = true;
+				break;
 			}
 		}
 		
 		for(int j = i; j < data.size - i; j += 2) {
-
-			if(read) {
+			
+			//needs to be fixed
+			if(data.get(j) != "END_DATA" && data.get(j += 1) != "END_DATA") {
 				enemy_data.put(data.get(j), Integer.parseInt(data.get(j += 1)));
 			}
 		}
