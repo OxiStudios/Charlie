@@ -1,8 +1,9 @@
 package com.oxistudios.charlie.level_engine;
 
-import com.oxistudios.charlie.levels.types.Puzzle;
-import com.oxistudios.charlie.levels.types.Runner;
-import com.oxistudios.charlie.levels.types.SideScroller;
+import com.oxistudios.charlie.level_engine.types.Puzzle;
+import com.oxistudios.charlie.level_engine.types.Runner;
+import com.oxistudios.charlie.level_engine.types.SideScroller;
+
 
 public class LevelController {
 

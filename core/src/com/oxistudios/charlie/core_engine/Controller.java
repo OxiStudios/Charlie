@@ -1,10 +1,10 @@
 package com.oxistudios.charlie.core_engine;
 
 import com.oxistudios.charlie.MainGame;
-import com.oxistudios.charlie.ablities.AbilityController;
-import com.oxistudios.charlie.characters.CharlieCharacter.CharlieCharacter;
-import com.oxistudios.charlie.levels.LevelController;
-import com.oxistudios.charlie.screens.MasterScreenClass;
+import com.oxistudios.charlie.ability_engine.AbilityController;
+import com.oxistudios.charlie.character_engine.CharlieCharacter.CharlieCharacter;
+import com.oxistudios.charlie.level_engine.LevelController;
+import com.oxistudios.charlie.navigation_engine.MasterScreenClass;
 
 public class Controller {
 	

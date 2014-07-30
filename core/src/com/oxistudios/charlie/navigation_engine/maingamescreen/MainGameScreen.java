@@ -2,9 +2,9 @@ package com.oxistudios.charlie.navigation_engine.maingamescreen;
 
 
 import com.oxistudios.charlie.MainGame;
-import com.oxistudios.charlie.ablities.AbilityController;
-import com.oxistudios.charlie.controls.Controller;
-import com.oxistudios.charlie.screens.MasterScreenClass;
+import com.oxistudios.charlie.ability_engine.AbilityController;
+import com.oxistudios.charlie.core_engine.Controller;
+import com.oxistudios.charlie.navigation_engine.MasterScreenClass;
 
 public class MainGameScreen extends MasterScreenClass{
 	

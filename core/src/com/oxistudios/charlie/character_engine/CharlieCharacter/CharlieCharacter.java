@@ -1,6 +1,7 @@
 package com.oxistudios.charlie.character_engine.CharlieCharacter;
 
-import com.oxistudios.charlie.characters.Entity;
+import com.oxistudios.charlie.character_engine.Entity;
+
 
 public class CharlieCharacter extends Entity{
 	

@@ -1,7 +1,7 @@
 package com.oxistudios.charlie.navigation_engine.maingamescreen;
 
 import com.badlogic.gdx.InputProcessor;
-import com.oxistudios.charlie.ablities.AbilityController;
+import com.oxistudios.charlie.ability_engine.AbilityController;
 
 public class UIInput implements InputProcessor{
 	
