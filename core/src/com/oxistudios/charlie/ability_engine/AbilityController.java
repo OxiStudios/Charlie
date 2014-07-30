@@ -10,7 +10,7 @@ public class AbilityController {
 	
 	private String master_ability_locator = "hard coded location";
 	private String ability_one_location;
-	private String ability_two_location
+	private String ability_two_location;
 	private SavingController saving_controller;
 
 	int ability_one_CD = 0;
