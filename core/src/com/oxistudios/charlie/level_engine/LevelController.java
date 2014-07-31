@@ -3,12 +3,13 @@ package com.oxistudios.charlie.level_engine;
 import java.awt.Point;
 import java.util.HashMap;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.oxistudios.charlie.level_engine.MasterLevel;
-import com.oxistudios.charlie.level_engine.types.Puzzle;
-import com.oxistudios.charlie.level_engine.types.Runner;
-import com.oxistudios.charlie.level_engine.types.SideScroller;
 import com.oxistudios.charlie.saving_engine.SavingController;
 
 public class LevelController {
@@ -17,27 +18,49 @@ public class LevelController {
 	private SavingController saving_controller;
 	private String master_level_locator = "Hard-coded path to dictionary file";
 	private String level_location;
+	private TextureAtlas texture_atlas;
 	
-	private HashMap<Point, Integer> map_data;
+	private HashMap<String, Integer> map_data;
+	private HashMap<String, Integer> static_data;
 	private HashMap<String, Integer> enemy_data;
+	private HashMap<Integer, Texture> map_tiles;
+	
+	private int x;
+	private int y;
+	private int MAP_SIZE_X;
+	private int MAP_SIZE_Y;
+	private float SCREEN_X = Gdx.graphics.getWidth();
+	private float SCREEN_Y = Gdx.graphics.getHeight();
 
 	public LevelController(int type, SavingController saving_controller,
 			String level_selected) {
 		
 		this.saving_controller = saving_controller;
 		level_location = getFileLocation(level_selected);
-		switch (type) {
-		case 1:
-			level = new SideScroller(saving_controller, level_location);
-		case 2:
-			level = new Puzzle(saving_controller, level_location);
-		case 3:
-			level = new Runner(saving_controller, level_location);
-		}
+		
+		
+		//switch (type) {
+		//case 1:
+		//	level = new SideScroller(saving_controller, level_location);
+		//case 2:
+		//	level = new Puzzle(saving_controller, level_location);
+		//case 3:
+		//	level = new Runner(saving_controller, level_location);
+		//}
 	}
 	
-	public void render(OrthographicCamera camera) {
-		
+	//might slow this down so it doesn't render 60 times a second.
+	public void render(float delta, SpriteBatch b, OrthographicCamera camera) {
+		x = 0;
+		y = 0;
+		//render the area of the map seen by the camera, right now this renders the whole map.
+		for(int i = 0; i < MAP_SIZE_X; ++i) {
+			for(int j = 0; j < MAP_SIZE_Y; ++j) {
+				x = 64 * i;
+				y = 64 * j;
+				b.draw(map_tiles.get(map_data.get("" + i +"," + j)), x, y, 64, 64);
+			}
+		}
 	}
 	
 	public void update() {
@@ -56,14 +79,19 @@ public class LevelController {
 		
 		header_block = level.getHeaderBlock();
 		data_block   = level.getDataBlock();
+		texture_atlas = level.getTextureAtlas(header_block);
+		map_tiles = level.loadTextures(header_block, texture_atlas);
 		
-		level.loadSprites(header_block);
-		
-		enemy_data = level.getEnemyData(data_block);
-		map_data   = level.getMapData(data_block);
+		enemy_data  = level.getEnemyData(data_block);
+		map_data    = level.getMapData(data_block);
+		static_data = level.getStaticData(data_block);
 	}
 
-	public HashMap<Point, Integer> getMap_data() {
+	public HashMap<String, Integer> getStatic_data() {
+		return static_data;
+	}
+
+	public HashMap<String, Integer> getMap_data() {
 		return map_data;
 	}
 
@@ -73,10 +101,6 @@ public class LevelController {
 
 	public MasterLevel getLevel() {
 		return level;
-	}
-
-	public void setLevel(MasterLevel level) {
-		this.level = level;
 	}
 	
 	/**
