@@ -214,7 +214,7 @@ public class MasterLevel {
 	/**
 	 * @param data
 	 *            - the raw map data
-	 * @return static_data, <x, y coords, sprite id> This method will have all of the map's static data in
+	 * @return static_data, (x, y coords, sprite id) This method will have all of the map's static data in
 	 *         a hashmap. The key is a point object, the value is the sprite id,
 	 *         used in LevelController
 	 */

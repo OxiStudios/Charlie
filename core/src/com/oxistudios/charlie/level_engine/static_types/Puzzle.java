@@ -1,4 +1,4 @@
-package com.oxistudios.charlie.level_engine.types;
+package com.oxistudios.charlie.level_engine.static_types;
 
 import com.oxistudios.charlie.level_engine.MasterLevel;
 import com.oxistudios.charlie.saving_engine.SavingController;
