@@ -64,6 +64,7 @@ public class LevelController {
 			}
 		}
 		
+		//grab each static entity object
 		for(int k = 0; k < static_entity.size; ++k) {
 			Entity e = static_entity.get(k);
 			b.draw(map_tiles.get(e.getID()), e.getPosition().x, e.getPosition().y, e.getHEIGHT(), e.getWIDTH());
