@@ -1,15 +1,14 @@
 package com.oxistudios.charlie.level_engine;
 
-import java.awt.Point;
 import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.oxistudios.charlie.character_engine.Entity;
 import com.oxistudios.charlie.saving_engine.SavingController;
 
 public class LevelController {
@@ -24,6 +23,8 @@ public class LevelController {
 	private HashMap<String, Integer> static_data;
 	private HashMap<String, Integer> enemy_data;
 	private HashMap<Integer, Texture> map_tiles;
+	
+	private Array<Entity> static_entity;
 	
 	private int x;
 	private int y;
@@ -59,7 +60,13 @@ public class LevelController {
 				x = 64 * i;
 				y = 64 * j;
 				b.draw(map_tiles.get(map_data.get("" + i +"," + j)), x, y, 64, 64);
+				b.draw(map_tiles.get(static_data.get("" + i +"," + j)), x, y, 64, 64);
 			}
+		}
+		
+		for(int k = 0; k < static_entity.size; ++k) {
+			Entity e = static_entity.get(k);
+			b.draw(map_tiles.get(e.getID()), e.getPosition().x, e.getPosition().y, e.getHEIGHT(), e.getWIDTH());
 		}
 	}
 	
@@ -75,6 +82,8 @@ public class LevelController {
 		Array<String> header_block;
 		Array<String> data_block;
 		
+		static_entity = new Array<Entity>();
+		
 		level.readLevel();
 		
 		header_block = level.getHeaderBlock();
@@ -84,7 +93,11 @@ public class LevelController {
 		
 		enemy_data  = level.getEnemyData(data_block);
 		map_data    = level.getMapData(data_block);
-		static_data = level.getStaticData(data_block);
+		static_data = level.getStaticData(data_block, static_entity);
+	}
+	
+	public void createStaticObjects(HashMap<String, Integer> static_data) {
+		
 	}
 
 	public HashMap<String, Integer> getStatic_data() {

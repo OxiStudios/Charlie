@@ -6,7 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.oxistudios.charlie.character_engine.Entity;
+import com.oxistudios.charlie.character_engine.static_map_locations.Safehouse;
 import com.oxistudios.charlie.saving_engine.SavingController;
 
 /**
@@ -218,7 +221,7 @@ public class MasterLevel {
 	 *         a hashmap. The key is a point object, the value is the sprite id,
 	 *         used in LevelController
 	 */
-	public HashMap<String, Integer> getStaticData(Array<String> data) {
+	public HashMap<String, Integer> getStaticData(Array<String> data, Array<Entity> static_entity) {
 		HashMap<String, Integer> static_data = new HashMap<String, Integer>();
 		int i;
 		for (i = 0; i < data.size; ++i) {
@@ -229,9 +232,13 @@ public class MasterLevel {
 
 		// i think this starts off by one
 		for (int j = i; j < data.size; j += 3) {
+			
+			if(data.get(j) == "0001") {
+				static_entity.add(new Safehouse(new Vector2(Integer.parseInt(data.get(j + 1)), Integer.parseInt(data.get(j + 2))), 64, 128));
+			}
 
 			if (data.get(j) != "END_STATIC") {
-				static_data.put(data.get(j) + "," + data.get(j + 1), Integer.parseInt(data.get(j + 2)));
+				static_data.put(data.get(j + 1) + "," + data.get(j + 2), Integer.parseInt(data.get(j)));
 			}
 		}
 
