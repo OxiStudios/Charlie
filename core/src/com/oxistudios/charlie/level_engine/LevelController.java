@@ -9,12 +9,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
 import com.oxistudios.charlie.character_engine.Entity;
+import com.oxistudios.charlie.physics_engine.PhysicsController;
 import com.oxistudios.charlie.saving_engine.SavingController;
 
 public class LevelController {
 
 	private MasterLevel level;
 	private SavingController saving_controller;
+	private PhysicsController physics_controller;
+	
 	private String master_level_locator = "Hard-coded path to dictionary file";
 	private String level_location;
 	private TextureAtlas texture_atlas;
@@ -33,21 +36,13 @@ public class LevelController {
 	private float SCREEN_X = Gdx.graphics.getWidth();
 	private float SCREEN_Y = Gdx.graphics.getHeight();
 
-	public LevelController(int type, SavingController saving_controller,
+	public LevelController(int type, SavingController saving_controller, PhysicsController physics_controller,
 			String level_selected) {
 		
-		this.saving_controller = saving_controller;
+		this.saving_controller  = saving_controller;
+		this.physics_controller = physics_controller;
+		
 		level_location = getFileLocation(level_selected);
-		
-		
-		//switch (type) {
-		//case 1:
-		//	level = new SideScroller(saving_controller, level_location);
-		//case 2:
-		//	level = new Puzzle(saving_controller, level_location);
-		//case 3:
-		//	level = new Runner(saving_controller, level_location);
-		//}
 	}
 	
 	//might slow this down so it doesn't render 60 times a second.
@@ -83,8 +78,6 @@ public class LevelController {
 		Array<String> header_block;
 		Array<String> data_block;
 		
-		static_entity = new Array<Entity>();
-		
 		level.readLevel();
 		
 		header_block = level.getHeaderBlock();
@@ -94,7 +87,7 @@ public class LevelController {
 		
 		enemy_data  = level.getEnemyData(data_block);
 		map_data    = level.getMapData(data_block);
-		static_data = level.getStaticData(data_block, static_entity);
+		static_entity = level.getStaticData(data_block);
 	}
 	
 	public void createStaticObjects(HashMap<String, Integer> static_data) {
@@ -121,6 +114,8 @@ public class LevelController {
 	 * Gets the file location of the level selected
 	 * @param level
 	 * @return location of level data file
+	 * 
+	 * format: level name, location
 	 */
 	private String getFileLocation(String level) {
 		int count = 0;

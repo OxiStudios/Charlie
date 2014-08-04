@@ -19,10 +19,11 @@ import com.oxistudios.charlie.saving_engine.SavingController;
  *         run the level correctly
  * 
  *         order of method calls readLevel() Array<String> getHeaderBlock()
- *         Array<String> getDataBlock() TextureAtlas getTextureAtlas() loadTextures(Array<String> header)
- *         HashMap<String, Integer> getEnemyData(Array<String> data)
- *         HashMap<String, Integer> getMapData(Array<String> data)
- *         HashMap<String, Integer> getStaticData(Array<String> data)
+ *         Array<String> getDataBlock() TextureAtlas getTextureAtlas()
+ *         loadTextures(Array<String> header) HashMap<String, Integer>
+ *         getEnemyData(Array<String> data) HashMap<String, Integer>
+ *         getMapData(Array<String> data) HashMap<String, Integer>
+ *         getStaticData(Array<String> data)
  * 
  */
 
@@ -92,20 +93,21 @@ public class MasterLevel {
 
 		return data;
 	}
-	
+
 	/**
 	 * used to get the texture atlas for the method loadSprites()
+	 * 
 	 * @return
 	 */
 	public TextureAtlas getTextureAtlas(Array<String> header) {
-		for(int i = 0; i < header.size; i++) {
-			if(header.get(i) == "TEXTURE_ATLAS_LOCATION") {
+		for (int i = 0; i < header.size; i++) {
+			if (header.get(i) == "TEXTURE_ATLAS_LOCATION") {
 				return new TextureAtlas(Gdx.files.external(header.get(i + 1)));
 			}
 		}
-		
+
 		return null;
-		
+
 	}
 
 	/**
@@ -114,7 +116,8 @@ public class MasterLevel {
 	 *         of the map grabs correct textures from the texture atlas, used in
 	 *         LevelController
 	 */
-	public HashMap<Integer, Texture> loadTextures(Array<String> header, TextureAtlas texture_atlas) {
+	public HashMap<Integer, Texture> loadTextures(Array<String> header,
+			TextureAtlas texture_atlas) {
 		HashMap<Integer, Texture> textures = new HashMap<Integer, Texture>();
 		int i;
 
@@ -128,7 +131,8 @@ public class MasterLevel {
 		// create the correct sprites for the given map
 		for (int j = i; j < header.size - i; j++) {
 			if (header.get(j) != "END_TEXTURES") {
-				textures.put(Integer.parseInt(header.get(j)), new Sprite(texture_atlas.createSprite(header.get(j))).getTexture());
+				textures.put(Integer.parseInt(header.get(j)), new Sprite(
+						texture_atlas.createSprite(header.get(j))).getTexture());
 			}
 		}
 
@@ -169,9 +173,9 @@ public class MasterLevel {
 	/**
 	 * @param data
 	 *            - the raw map data
-	 * @return map_data, <x, y coords, sprite id> This method will have all of the map data in a hashmap.
-	 *         The key is a point object, the value is the texture id, used in
-	 *         LevelController
+	 * @return map_data, <x, y coords, sprite id> This method will have all of
+	 *         the map data in a hashmap. The key is a point object, the value
+	 *         is the texture id, used in LevelController
 	 */
 	public HashMap<String, Integer> getMapData(Array<String> data) {
 		int x = 0;
@@ -182,14 +186,15 @@ public class MasterLevel {
 		HashMap<String, Integer> map_data = new HashMap<String, Integer>();
 		for (i = 0; i < data.size; ++i) {
 			if (data.get(i) == "MAP_DATA") {
-				//get how big the map is and put it as the first point in the hashmap
+				// get how big the map is and put it as the first point in the
+				// hashmap
 				i++;
 				x = Integer.parseInt(data.get(i));
 				i++;
 				y = Integer.parseInt(data.get(i));
-				//add the x limit and y limit to the hashmap
-				map_data.put("" + x +"," + y, 000);
-				//get the the next for loop to loop over the actual map data
+				// add the x limit and y limit to the hashmap
+				map_data.put("" + x + "," + y, 000);
+				// get the the next for loop to loop over the actual map data
 				break;
 			}
 		}
@@ -198,14 +203,15 @@ public class MasterLevel {
 		for (int j = i; j < data.size; ++j) {
 
 			if (data.get(j) != "END_MAP") {
-				
-				map_data.put("" + current_x + "," + current_y, Integer.parseInt(data.get(j)));
-				
-				//check to see if we need to start next row
-				if(current_x == x) {
+
+				map_data.put("" + current_x + "," + current_y,
+						Integer.parseInt(data.get(j)));
+
+				// check to see if we need to start next row
+				if (current_x == x) {
 					current_x = 0;
 					++current_y;
-				}else{// we dont need to start next row yet
+				} else {// we dont need to start next row yet
 					++current_x;
 				}
 			}
@@ -217,12 +223,15 @@ public class MasterLevel {
 	/**
 	 * @param data
 	 *            - the raw map data
-	 * @return static_data, (x, y coords, sprite id) This method will have all of the map's static data in
-	 *         a hashmap. The key is a point object, the value is the sprite id,
-	 *         used in LevelController
+	 * @return static_data, Array(Entity) (x, y coords, h, w dimensions, sprite
+	 *         id) This method will have all of the map's static data in a the
+	 *         objects.
 	 */
-	public HashMap<String, Integer> getStaticData(Array<String> data, Array<Entity> static_entity) {
-		HashMap<String, Integer> static_data = new HashMap<String, Integer>();
+	public Array<Entity> getStaticData(Array<String> data) {
+
+		// HashMap<String, Integer> static_data = new HashMap<String,
+		// Integer>();
+		Array<Entity> static_entity = new Array<Entity>();
 		int i;
 		for (i = 0; i < data.size; ++i) {
 			if (data.get(i) == "STATIC_DATA") {
@@ -231,17 +240,21 @@ public class MasterLevel {
 		}
 
 		// i think this starts off by one
-		for (int j = i; j < data.size; j += 3) {
-			
-			if(data.get(j) == "0001") {
-				static_entity.add(new Safehouse(new Vector2(Integer.parseInt(data.get(j + 1)), Integer.parseInt(data.get(j + 2))), 64, 128));
+		for (int j = i; j < data.size; j += 5) {
+
+			if (data.get(j) == "0001") {
+				static_entity.add(new Safehouse(new Vector2(Integer
+						.parseInt(data.get(j + 1)), Integer.parseInt(data
+						.get(j + 2))), Integer.parseInt(data.get(j + 3)),
+						Integer.parseInt(data.get(j + 4))));
 			}
 
-			if (data.get(j) != "END_STATIC") {
-				static_data.put(data.get(j + 1) + "," + data.get(j + 2), Integer.parseInt(data.get(j)));
-			}
+			// if (data.get(j) != "END_STATIC") {
+			// static_data.put(data.get(j + 1) + "," + data.get(j + 2),
+			// Integer.parseInt(data.get(j)));
+			// }
 		}
 
-		return static_data;
+		return static_entity;
 	}
 }

@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Manifold;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 
 public class PhysicsController {
 	
@@ -15,11 +16,21 @@ public class PhysicsController {
 	private static final int BOX_VELOCITY_ITERATIONS = 6;
 	private static final int BOX_POSITION_ITERATIONS = 2;
 	
-	World world;
-	float accumulator;
+	private Array<Body> static_bodies;
+	private Array<Body> movable_bodies;
+	
+	private World world;
+	private float accumulator;
 	public PhysicsController() {
+		
+		
 		world = new World(new Vector2(0,0), true);
+		
+		static_bodies  = new Array<Body>();
+		movable_bodies = new Array<Body>();
+		
 		setCollisionListener();
+		
 	}
 	
 	public void update(float delta) {
@@ -67,8 +78,11 @@ public class PhysicsController {
 		});
 	}
 	
-	public void addStaticBuilding() {
-		
+	public Array<Body> getStatic_bodies() {
+		return static_bodies;
 	}
-
+	
+	public Array<Body> getMovable_bodies() {
+		return movable_bodies;
+	}
 }

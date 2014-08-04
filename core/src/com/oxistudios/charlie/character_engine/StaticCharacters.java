@@ -11,7 +11,7 @@ public class StaticCharacters extends Entity{
 		super(position, width, height);
 	}
 	
-	public void createPhysicsObject(Array<Body> static_bodies, World world) {
+	public void createPhysicsObject(Array<Body> movable_bodies, World world) {
 		
 	}
 
