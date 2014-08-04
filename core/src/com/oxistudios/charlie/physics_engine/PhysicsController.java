@@ -66,5 +66,9 @@ public class PhysicsController {
 			}
 		});
 	}
+	
+	public void addStaticBuilding() {
+		
+	}
 
 }
