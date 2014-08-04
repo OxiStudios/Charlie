@@ -5,7 +5,7 @@ public class MasterMusic {
 	private String sound_location;
 	private String[] sound_data;
 	private int place;
-	private int sound_id;
+	private String[] sound_id;
 
 	public MasterMusic(SavingController saving_controller, String sound_location) {
 		this.saving_controller = saving_controller;
@@ -76,8 +76,9 @@ public class MasterMusic {
 		return sounds;
 	}
 
-	public void playSound(int sound_id) {
-		String sound_id_string = " " + sound_id;
+	public void playSound() {
+		String s = music_config_path.readString();
+		String[] sound_id_string = s.split(",");
 
 	}
 
