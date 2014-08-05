@@ -1,11 +1,22 @@
 package com.oxistudios.charlie.character_engine;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.Array;
 
 public class Entity {
+	
+	protected Animation animation;
+	protected Texture entity_texture;
+	protected TextureRegion[] animation_frames;
+	protected TextureRegion current_frame;
+	protected float stateTime;
 	
 	protected int health;
 	protected int shield;
@@ -25,6 +36,21 @@ public class Entity {
 		this.position = position;
 	}
 	
+	public void createAnimation(String location, int FRAME_ROWS, int FRAME_COLS) {
+		this.entity_texture = new Texture(Gdx.files.internal(location));
+		TextureRegion[][] tmp = TextureRegion.split(this.entity_texture, entity_texture.getWidth(), entity_texture.getHeight());
+		this.animation_frames = new TextureRegion[FRAME_COLS * FRAME_ROWS];
+		int index = 0;
+		for(int i = 0; i < FRAME_ROWS; ++i) {
+			for(int j = 0; j < FRAME_COLS; ++j) {
+				this.animation_frames[index++] = tmp[i][j];
+			}
+		}
+		
+		this.animation = new Animation(0.025f, this.animation_frames);
+		this.stateTime = 0f;
+	}
+	
 	public void createPhysicsObject(Array<Body> bodies, World world) {
 		
 	}
@@ -32,7 +58,7 @@ public class Entity {
 	 //////////////////////////////////////
 	//////////////////////////////////////
 	
-	public void render(float timer) {
+	public void render(float timer, SpriteBatch b) {
 		
 	}
 	
