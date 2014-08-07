@@ -1,5 +1,7 @@
 package com.oxistudios.charlie.lighting_engine;
 
+import com.badlogic.gdx.Gdx;
+
 public class LightController {
 	static final Color defaultColor = new Color(0.75f, 0.75f, 0.5f, 0.75f);
 	private boolean activeLight = true;
