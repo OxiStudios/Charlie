@@ -6,7 +6,7 @@ public class EnemySpawn {
 	
 	private Vector2 position;
 	
-	public EnemySpawn(Vector2 position) {
+	public EnemySpawn(Vector2 position, int type) {
 		this.position = position;
 	}
 	
