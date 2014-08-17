@@ -85,4 +85,8 @@ public class PhysicsController {
 	public Array<Body> getMovable_bodies() {
 		return movable_bodies;
 	}
+	
+	public World get_world() {
+		return world;
+	}
 }

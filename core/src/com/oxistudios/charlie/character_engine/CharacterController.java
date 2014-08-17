@@ -18,7 +18,7 @@ public class CharacterController {
 
 	}
 	
-	public void init_spawns(Array<EnemyCharacter> enemy_types, Array<Vector2> spawn_positions, Array<Integer> amounts) {
+	public void init_spawns(Array<Array<EnemyCharacter>> enemy_types, Array<Vector2> spawn_positions, Array<Integer> amounts) {
 		for(int i = 0; i < enemy_types.size; i++) {
 			enemy_spawns.add(new EnemySpawn(this, spawn_positions.get(i), enemy_types.get(i), amounts.get(i).intValue()));
 		}

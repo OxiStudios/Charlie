@@ -13,6 +13,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.utils.Array;
+import com.oxistudios.charlie.physics_engine.PhysicsController;
 
 public class Entity {
 	
@@ -35,8 +36,10 @@ public class Entity {
 	
 	protected String ID;
 	
+	protected PhysicsController physics_controller;
 	
-	public Entity(Vector2 position, int width, int height) {
+	public Entity(PhysicsController physics_controller, Vector2 position, int width, int height) {
+		this.physics_controller = physics_controller;
 		this.WIDTH = width;
 		this.HEIGHT = height;
 		this.position = position;

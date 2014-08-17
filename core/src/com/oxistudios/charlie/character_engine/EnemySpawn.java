@@ -10,25 +10,27 @@ import com.oxistudios.charlie.character_engine.enemies.EnemyCharacter;
 public class EnemySpawn {
 	
 	private Vector2 position;
-	private EnemyCharacter enemy;
+	private Array<EnemyCharacter> enemy_types;
 	private int amount;
-	private int timer;
 	
 	private boolean cleared;
 	private boolean respawn;
 	private Random random;
-	private int respawn_time;
+	private float respawn_time;
+	private float current;
+	private float start;
+	
+	int sub_amount_one;
+	int sub_amount_two;
 	
 	private CharacterController character_controller;
 	private Array<EnemyCharacter> enemies;
 	
-	public EnemySpawn(CharacterController character_controller, Vector2 position, EnemyCharacter enemy, int amount) {
+	public EnemySpawn(CharacterController character_controller, Vector2 position, Array<EnemyCharacter> enemy_types, int amount) {
 		this.character_controller = character_controller;
+		this.enemy_types          = enemy_types;
 		
 		enemies = new Array<EnemyCharacter>();
-	
-		timer = 0;
-		
 		random = new Random();
 	}
 	
@@ -37,18 +39,27 @@ public class EnemySpawn {
 		if(enemies.size == 0) {
 			cleared = true;
 			respawn_time = random.nextInt(6) + 4;
-			timer = 0;
+			current = 0;
 		}
 	}
 	
 	//if all enemies from this spawn are dead, respawn enemies
 	public void spawn() {
 		if(respawn) {
-			for(int i = 0; i < amount; i++) {
-				enemies.add(enemy.createNew(position, enemy.getWIDTH(), enemy.getHEIGHT()));
+			
+			sub_amount_one = random.nextInt(amount);
+			sub_amount_two = amount - sub_amount_one;
+			
+			for(int i = 0; i < sub_amount_one; i++) {
+				enemies.add(enemy_types.get(0).createNew(position, enemy_types.get(0).getWIDTH(), enemy_types.get(0).getHEIGHT()));
+			}
+			
+			for(int i = 0; i < sub_amount_two; i++) {
+				enemies.add(enemy_types.get(1).createNew(position, enemy_types.get(1).getWIDTH(), enemy_types.get(1).getHEIGHT()));
 			}
 			
 			respawn = false;
+			cleared = false;
 		}
 	}
 	
@@ -63,8 +74,18 @@ public class EnemySpawn {
 			enemy.update(delta);
 		}
 		
-		if(cleared && timer >= respawn_time) {
+		//start the timer
+		if(cleared) {
+			start = delta;
+		}
+		
+		//check if timer is done
+		if(cleared && current >= respawn_time) {
+			
 			respawn = true;
+			
+		}else{
+			current += delta - start;
 		}
 	}
 
