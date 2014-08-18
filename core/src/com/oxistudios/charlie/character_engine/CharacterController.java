@@ -14,14 +14,8 @@ public class CharacterController {
 	public CharacterController(LevelController level_controller) {
 		this.level_controller = level_controller;
 		
-		enemy_spawns = new Array<EnemySpawn>();
+		enemy_spawns = level_controller.getEnemy_spawns();
 
-	}
-	
-	public void init_spawns(Array<Array<EnemyCharacter>> enemy_types, Array<Vector2> spawn_positions, Array<Integer> amounts) {
-		for(int i = 0; i < enemy_types.size; i++) {
-			enemy_spawns.add(new EnemySpawn(this, spawn_positions.get(i), enemy_types.get(i), amounts.get(i).intValue()));
-		}
 	}
 	
 	public void removeEnemy(EnemyCharacter enemy) {

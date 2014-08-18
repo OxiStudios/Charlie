@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.oxistudios.charlie.character_engine.EnemySpawn;
 import com.oxistudios.charlie.character_engine.Entity;
 import com.oxistudios.charlie.character_engine.static_map_locations.Safehouse;
 import com.oxistudios.charlie.saving_engine.SavingController;
@@ -24,6 +25,9 @@ import com.oxistudios.charlie.saving_engine.SavingController;
  *         getEnemyData(Array<String> data) HashMap<String, Integer>
  *         getMapData(Array<String> data) HashMap<String, Integer>
  *         getStaticData(Array<String> data)
+ *         
+ *         
+ *         this is all getting rewritten
  * 
  */
 
@@ -147,8 +151,8 @@ public class MasterLevel {
 	 *         needs work
 	 */
 
-	public HashMap<String, Integer> getEnemyData(Array<String> data) {
-		HashMap<String, Integer> enemy_data = new HashMap<String, Integer>();
+	public Array<EnemySpawn> getEnemyData(Array<String> data) {
+		Array<EnemySpawn> enemy_spawns = new Array<EnemySpawn>();
 		int i;
 
 		// get to the correct location of the file
@@ -163,11 +167,11 @@ public class MasterLevel {
 
 			// needs to be fixed, this could cause an off by 1 error
 			if (data.get(j) != "END_ENEMY" && data.get(j += 1) != "END_ENEMY") {
-				enemy_data.put(data.get(j), Integer.parseInt(data.get(j + 1)));
+				enemy_spawns.add((EnemySpawn) saving_controller.create_object_json(EnemySpawn.class, data.get(i)));
 			}
 		}
 
-		return enemy_data;
+		return enemy_spawns;
 	}
 
 	/**
@@ -241,13 +245,6 @@ public class MasterLevel {
 
 		// i think this starts off by one
 		for (int j = i; j < data.size; j += 5) {
-
-			if (data.get(j) == "0001") {
-				static_entity.add(new Safehouse(new Vector2(Integer
-						.parseInt(data.get(j + 1)), Integer.parseInt(data
-						.get(j + 2))), Integer.parseInt(data.get(j + 3)),
-						Integer.parseInt(data.get(j + 4))));
-			}
 
 			// if (data.get(j) != "END_STATIC") {
 			// static_data.put(data.get(j + 1) + "," + data.get(j + 2),

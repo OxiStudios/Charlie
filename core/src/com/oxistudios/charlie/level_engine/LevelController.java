@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
+import com.oxistudios.charlie.character_engine.EnemySpawn;
 import com.oxistudios.charlie.character_engine.Entity;
 import com.oxistudios.charlie.physics_engine.PhysicsController;
 import com.oxistudios.charlie.saving_engine.SavingController;
@@ -24,7 +25,7 @@ public class LevelController {
 	
 	private HashMap<String, Integer> map_data;
 	private HashMap<String, Integer> static_data;
-	private HashMap<String, Integer> enemy_data;
+	private Array<EnemySpawn> enemy_spawns;
 	private HashMap<Integer, Texture> map_tiles;
 	
 	private Array<Entity> static_entity;
@@ -85,7 +86,7 @@ public class LevelController {
 		texture_atlas = level.getTextureAtlas(header_block);
 		map_tiles = level.loadTextures(header_block, texture_atlas);
 		
-		enemy_data  = level.getEnemyData(data_block);
+		enemy_spawns  = level.getEnemyData(data_block);
 		map_data    = level.getMapData(data_block);
 		static_entity = level.getStaticData(data_block);
 	}
@@ -102,8 +103,8 @@ public class LevelController {
 		return map_data;
 	}
 
-	public HashMap<String, Integer> getEnemy_data() {
-		return enemy_data;
+	public Array<EnemySpawn> getEnemy_spawns() {
+		return enemy_spawns;
 	}
 
 	public MasterLevel getLevel() {
