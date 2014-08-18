@@ -1,5 +1,7 @@
 package com.oxistudios.charlie.lighting_engine;
 
+import javax.media.j3d.Light;
+
 import com.badlogic.gdx.Gdx;
 
 public class RayHandler implements Disposable {
@@ -65,4 +67,63 @@ public class RayHandler implements Disposable {
 		y2 = y + halfViewPortHeight;
 	}
 
+	public void setCombinedMatrix(Matrix4 combined, float x, float y,
+			float viewPortWidth, float viewPortHeight) {
+		// Sets the combined camera matrix.
+		System.arraycopy(combined.val, 0, this.combined.val, 0, 16);
+		// updateCameraCorners
+		final float halfViewPortWidth = viewPortWidth * 0.5f;
+		x1 = x - halfViewPortWidth;
+		x2 = x + halfViewPortWidth;
+
+		final float halfViewPortHeight = viewPortHeight * 0.5f;
+		y1 = y - halfViewPortHeight;
+		y2 = y + halfViewPortHeight;
+	}
+
+	boolean intersect(float x, float y, float radius) {
+		// Checks to see if light is on the screen. Retrun true if camera screen
+		// intersects or contains provided light, represented by circle/box area
+		return (x1 < (x + radius) && x2 > (x - radius) && y1 < (y + radius) && y2 > (y - radius));
+	}
+
+	public void updateAndRender(){
+	// Updates and renders all the active lights
+		update();
+		render();
+	}
+	
+	public void update(){
+	// Manual update method for all the active lights
+		for(Light light : lightList){
+			light.update();
+		}
+	
+	}
+	
+	public void render(){
+	// Manual render method for all the active lights
+		lightRenderedLastFrame = 0;
+		
+		Gdx.gl.glDepthMask(false);
+		Gdx.gl.glEnable(GL20.GL_BLEND);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE);
+		
+		boolean useLightMap = (shadows || blur);
+		if(useLightMap){
+			lightMap.frameBuffer.begin();
+			Gdx.gl.glClearColor(0f, 0f, 0f, 0f);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		}
+		
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
